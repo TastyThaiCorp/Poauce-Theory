@@ -2,9 +2,9 @@
 "use strict";
 
 /* Empty string = same-origin (Railway serves site + API together).
-   Set to "https://your-api.up.railway.app" only if the frontend is hosted
-   separately (e.g. GitHub Pages) from the API. */
-const RAILWAY_API_URL = "";
+   Absolute URL = use the live Railway API from a separately hosted frontend
+   (e.g. GitHub Pages). */
+const RAILWAY_API_URL = "https://poauce-theory-production.up.railway.app";
 
 const PRODUCTS = [
   { id:"brown-sugar", name:"Brown Sugar", lux:"Noir", price:11.99, cats:["sweet"],
