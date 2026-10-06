@@ -192,3 +192,79 @@ p{line-height:1.7;color:var(--muted);font-size:.95rem}
   .section{padding:3.5rem 1.2rem}
   .dict-card{padding:2.2rem 1.5rem}
 }
+
+/* ============ Poauce Theory — upgrade pack: renders, pop lab, responsive ============ */
+
+/* film grain over everything (below chrome) */
+body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");}
+
+/* fluid section rhythm — no dead space on any screen */
+.section{padding:clamp(3rem,7vw,5rem) clamp(1rem,4vw,1.5rem)}
+
+/* hero shader canvas */
+#hero-canvas{position:absolute;inset:0;width:100%;height:100%;z-index:1}
+.hero-inner{position:relative;z-index:2}
+.hero-scroll{z-index:2}
+
+/* machine banner — natural aspect, never cropped */
+.machine-banner{background:#060605;border-bottom:1px solid var(--wood-border)}
+.machine-banner img{width:100%;max-width:980px;height:auto;margin:0 auto;display:block}
+
+/* pop lab */
+.pop-lab{background:var(--wood-2);border:1px solid var(--wood-border);margin-bottom:3rem;overflow:hidden}
+.pop-lab-head{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.4rem 1.6rem;border-bottom:1px solid var(--wood-border);flex-wrap:wrap}
+.pop-lab-head h3{font-size:1.5rem}
+.pop-lab-head p{font-size:.82rem}
+.pop-count{font-family:var(--serif);font-style:italic;color:var(--gold);font-size:1.1rem;white-space:nowrap}
+#pop-canvas{display:block;width:100%;height:clamp(300px,46vw,460px);cursor:crosshair;touch-action:manipulation;
+  background:radial-gradient(900px 420px at 50% 120%,#123c2f 0%,#0a0a0a 65%)}
+
+/* video — natural aspect, never cropped */
+.video-wrap{margin-bottom:3rem}
+.video-wrap video{width:100%;height:auto;display:block;border:1px solid var(--wood-border);background:#000}
+.caption{font-size:.75rem;letter-spacing:.08em;color:#6b655a;margin-top:.7rem;font-style:italic}
+
+/* render gallery */
+.gallery-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;margin-bottom:2.5rem}
+.g-card{background:var(--wood-2);border:1px solid var(--wood-border);overflow:hidden;transition:border-color .4s var(--ease),transform .4s var(--ease)}
+.g-card:hover{border-color:rgba(201,162,39,.5);transform:translateY(-4px)}
+.g-card.wide{grid-column:1/-1}
+.g-img{aspect-ratio:4/3;overflow:hidden;background:#0d0c0a}
+.g-card.wide .g-img{aspect-ratio:21/9}
+.g-img img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.g-card:hover .g-img img{transform:scale(1.05)}
+.g-body{padding:1.6rem;display:grid;grid-template-columns:auto 1fr;gap:.4rem 1.2rem;align-items:start}
+.g-body .layer-num{grid-row:span 2}
+.g-body h3{font-size:1.25rem}
+.g-body p{font-size:.85rem}
+
+/* legacy text layers (kept for reference pages) */
+.layer-list{display:flex;flex-direction:column;gap:1.2rem}
+.layer{display:grid;grid-template-columns:90px 1fr;gap:1.5rem;background:var(--wood-2);border:1px solid var(--wood-border);padding:1.8rem;align-items:start}
+
+/* ============ responsive: tablet + phone, smart scaled ============ */
+@media(max-width:1024px){
+  .product-grid{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1.4rem}
+  .gallery-grid{gap:1.2rem}
+  .stat-grid{gap:1rem}
+}
+@media(max-width:860px){
+  .split{grid-template-columns:1fr;gap:2.2rem}
+}
+@media(max-width:640px){
+  .gallery-grid{grid-template-columns:1fr}
+  .g-card.wide .g-img{aspect-ratio:4/3}
+  .product-grid{grid-template-columns:1fr 1fr;gap:1rem}
+  .product-body{padding:1rem}
+  .product-body h3{font-size:1.05rem}
+  .hero{min-height:94svh}
+  .cta-row .btn{flex:1 1 100%;text-align:center}
+  .pop-lab-head{padding:1.1rem}
+  .layer{grid-template-columns:1fr;gap:.8rem;padding:1.4rem}
+  .dict-card{padding:2rem 1.4rem}
+}
+@media(max-width:400px){
+  .product-grid{grid-template-columns:1fr}
+  .brand{font-size:.8rem;letter-spacing:.12em}
+}

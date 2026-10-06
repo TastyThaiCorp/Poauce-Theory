@@ -101,7 +101,8 @@ def contact(data: ContactIn):
 # service: frontend + API, one domain, no extra cost). The site lives at the
 # repo root (index.html, css/, js/, images/). API routes above take precedence.
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-for _mount, _dir in (("/css", "css"), ("/js", "js"), ("/images", "images")):
+for _mount, _dir in (("/css", "css"), ("/js", "js"), ("/images", "images"),
+                     ("/renders", "renders")):
     _full = os.path.join(ROOT_DIR, _dir)
     if os.path.isdir(_full):
         app.mount(_mount, StaticFiles(directory=_full), name=_dir)

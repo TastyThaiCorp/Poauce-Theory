@@ -48,6 +48,7 @@
   <!-- ============ HOME ============ -->
   <section class="view active" id="view-home">
     <div class="hero">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
       <div class="hero-bamboo" aria-hidden="true"></div>
       <div class="hero-inner reveal">
         <p class="eyebrow">POAUCE <span class="italic-lux">(pause.)</span> THEORY</p>
@@ -135,20 +136,36 @@
 
   <!-- ============ MACHINE ============ -->
   <section class="view" id="view-machine">
+    <div class="machine-banner"><img src="renders/machine/machine-01.webp" alt="The Poauce Fabricator — five-layer spherification tower" fetchpriority="high"></div>
     <div class="section">
       <div class="section-head reveal">
         <p class="eyebrow">THE FABRICATOR</p>
         <h2>Five layers. <span class="italic-lux gold">One pause.</span></h2>
-        <p>A concept machine for cold-oil spherification at flavor-lab scale.</p>
+        <p>Six heated reservoirs up top. Seventy-two brass tips. A golden cold-oil column. A mechanical iris. A reclaim loop that wastes nothing. This is the concept machine, rendered.</p>
       </div>
-      <div class="layer-list">
-        <div class="layer reveal"><span class="layer-num">01</span><div><h3>Sauce Reservoir Deck</h3><p>Six jacketed 1-liter chambers, one per flavor, held at 50–60&deg;C with slow stirrers so the agar never pre-sets.</p></div></div>
-        <div class="layer reveal"><span class="layer-num">02</span><div><h3>Precision Drip Array</h3><p>Seventy-two tips, twelve per flavor, each dripping 0.5–2 drops per second from 8–10 cm above the oil.</p></div></div>
-        <div class="layer reveal"><span class="layer-num">03</span><div><h3>Cold Oil Bath</h3><p>Twelve liters of grapeseed oil held at 2–5&deg;C in a tall column, so every bead sets before it lands.</p></div></div>
-        <div class="layer reveal"><span class="layer-num">04</span><div><h3>Iris Aperture Plate</h3><p>Thirty-six camera-aperture diaphragms. HOLD gathers the batch, DRAIN drops the oil, RINSE washes the beads.</p></div></div>
-        <div class="layer reveal"><span class="layer-num">05</span><div><h3>Oil Reclaim Loop</h3><p>Used oil is filtered to 50 microns, separated, re-chilled, and returned. Nothing wasted.</p></div></div>
+
+      <div class="pop-lab reveal">
+        <div class="pop-lab-head">
+          <div><h3>The <span class="italic-lux gold">Pop Lab</span></h3><p>Tap a bead. Go on.</p></div>
+          <span class="pop-count"><span id="pop-count">0</span> pops</span>
+        </div>
+        <canvas id="pop-canvas"></canvas>
       </div>
-      <div class="concept-note reveal"><i data-lucide="flask-conical"></i><p>Concept engineering. The iris mechanism and seals need a physical prototype before production.</p></div>
+
+      <div class="video-wrap reveal">
+        <video src="renders/machine/machine-beads.mp4" poster="renders/machine/machine-beads-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+        <p class="caption">Beads forming in the cold-oil column — concept visualization.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="g-card reveal"><div class="g-img"><img src="renders/machine/machine-02.webp" alt="Brass drip array releasing sauce droplets" loading="lazy"></div><div class="g-body"><span class="layer-num">02</span><h3>Precision Drip Array</h3><p>Seventy-two tips, twelve per flavor, each dripping 0.5–2 drops per second from 8–10 cm above the oil.</p></div></div>
+        <div class="g-card reveal"><div class="g-img"><img src="renders/machine/machine-03.webp" alt="Spherified beads sinking through golden oil" loading="lazy"></div><div class="g-body"><span class="layer-num">03</span><h3>Cold Oil Bath</h3><p>Twelve liters of grapeseed oil held at 2–5&deg;C, so every bead sets before it lands.</p></div></div>
+        <div class="g-card reveal"><div class="g-img"><img src="renders/machine/machine-04.webp" alt="Mechanical iris aperture plate with beads" loading="lazy"></div><div class="g-body"><span class="layer-num">04</span><h3>Iris Aperture Plate</h3><p>Thirty-six camera-aperture diaphragms. HOLD gathers the batch, DRAIN drops the oil, RINSE washes the beads.</p></div></div>
+        <div class="g-card reveal"><div class="g-img"><img src="renders/machine/machine-05.webp" alt="Oil filtration and reclaim loop" loading="lazy"></div><div class="g-body"><span class="layer-num">05</span><h3>Oil Reclaim Loop</h3><p>Used oil is filtered to 50 microns, separated, re-chilled, and returned. Nothing wasted.</p></div></div>
+        <div class="g-card wide reveal"><div class="g-img"><img src="renders/machine/machine-06.webp" alt="The Fabricator glowing in a dark lab" loading="lazy"></div><div class="g-body"><span class="layer-num">01–05</span><h3>The Lab at Night</h3><p>Six jacketed 1-liter sauce reservoirs held at 50–60&deg;C with slow stirrers, so the agar never pre-sets. Six flavors, one run, ten minutes.</p></div></div>
+      </div>
+
+      <div class="concept-note reveal"><i data-lucide="flask-conical"></i><p>Concept engineering and concept renders. The iris mechanism and seals need a physical prototype before production.</p></div>
     </div>
   </section>
 

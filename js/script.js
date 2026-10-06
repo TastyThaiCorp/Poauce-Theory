@@ -242,3 +242,137 @@ renderCatalog();
 renderFeatured();
 observeReveals();
 lucide.createIcons();
+
+/* ---------- hero shader: drifting emerald/gold gradient blobs ---------- */
+(function initHero(){
+  const cv = document.getElementById("hero-canvas");
+  if(!cv) return;
+  const ctx = cv.getContext("2d");
+  const blobs = [
+    {c:"16,68,52",  r:.55, px:.72, py:.22, a:.55, sx:.32, sy:.21},
+    {c:"201,162,39",r:.30, px:.24, py:.72, a:.15, sx:.24, sy:.30},
+    {c:"8,42,33",   r:.60, px:.18, py:.18, a:.60, sx:.19, sy:.26},
+    {c:"52,94,58",  r:.34, px:.82, py:.80, a:.30, sx:.28, sy:.18},
+  ];
+  let w=0,h=0,t=Math.random()*10,raf=null;
+  function size(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    w=cv.clientWidth; h=cv.clientHeight;
+    cv.width=w*dpr; cv.height=h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function frame(){
+    t+=0.016;
+    ctx.fillStyle="#0a0a0a"; ctx.fillRect(0,0,w,h);
+    const m=Math.max(w,h);
+    for(const b of blobs){
+      const x=(b.px+Math.sin(t*b.sx)*0.10)*w;
+      const y=(b.py+Math.cos(t*b.sy)*0.10)*h;
+      const r=b.r*m;
+      const g=ctx.createRadialGradient(x,y,0,x,y,r);
+      g.addColorStop(0,`rgba(${b.c},${b.a})`);
+      g.addColorStop(1,`rgba(${b.c},0)`);
+      ctx.fillStyle=g;
+      ctx.beginPath(); ctx.arc(x,y,r,0,6.3); ctx.fill();
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function start(){ if(raf==null && w>0){ frame(); } }
+  function stop(){ if(raf!=null){ cancelAnimationFrame(raf); raf=null; } }
+  size(); start();
+  window.addEventListener("resize", size);
+  new IntersectionObserver(en=>{
+    const v=en[0].isIntersecting && document.getElementById("view-home").classList.contains("active");
+    v?start():stop();
+  },{threshold:0}).observe(cv);
+})();
+
+/* ---------- pop lab: tap the beads, watch them burst ---------- */
+(function initPopLab(){
+  const cv=document.getElementById("pop-canvas");
+  if(!cv) return;
+  const ctx=cv.getContext("2d");
+  const COLORS=["#d99a35","#d94f30","#7fb069","#e3c878","#8a5a2b","#efe6d0","#b4552d"];
+  const counter=document.getElementById("pop-count");
+  let beads=[],parts=[],rings=[],pops=0,raf=null,w=0,h=0;
+  const rnd=(a,b)=>a+Math.random()*(b-a);
+  const pick=a=>a[(Math.random()*a.length)|0];
+  function size(){
+    const dpr=Math.min(window.devicePixelRatio||1,2);
+    w=cv.clientWidth; h=cv.clientHeight;
+    cv.width=w*dpr; cv.height=h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function spawnBead(top){
+    beads.push({x:rnd(20,w-20), y:top?rnd(0,h*0.4):h+rnd(10,80),
+      r:rnd(13,30), c:pick(COLORS), vy:-rnd(.35,1.0), ph:rnd(0,6.3), ps:rnd(.008,.02)});
+  }
+  function burst(b){
+    pops++; if(counter) counter.textContent=pops;
+    for(let i=0;i<16;i++){
+      const a=rnd(0,6.3), sp=rnd(1,4.5);
+      parts.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,
+        life:1, decay:rnd(.012,.025), r:rnd(1.5,4), c:b.c});
+    }
+    rings.push({x:b.x,y:b.y,r:b.r,life:1});
+    beads.splice(beads.indexOf(b),1);
+    if(beads.length<10) spawnBead(false);
+  }
+  function drawBead(b){
+    const g=ctx.createRadialGradient(b.x-b.r*.35,b.y-b.r*.35,b.r*.08,b.x,b.y,b.r);
+    g.addColorStop(0,"rgba(255,255,255,.9)");
+    g.addColorStop(.28,b.c);
+    g.addColorStop(1,"rgba(0,0,0,.45)");
+    ctx.fillStyle=g;
+    ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,6.3); ctx.fill();
+    ctx.fillStyle="rgba(255,255,255,.75)";
+    ctx.beginPath(); ctx.ellipse(b.x-b.r*.32,b.y-b.r*.38,b.r*.20,b.r*.12,-.6,0,6.3); ctx.fill();
+  }
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    for(const b of beads){
+      b.y+=b.vy; b.ph+=b.ps; b.x+=Math.sin(b.ph)*.4;
+      if(b.y<-40){ beads.splice(beads.indexOf(b),1); spawnBead(false); continue; }
+      drawBead(b);
+    }
+    for(const p of parts){
+      p.x+=p.vx; p.y+=p.vy; p.vy+=.06; p.life-=p.decay;
+      if(p.life<=0){ parts.splice(parts.indexOf(p),1); continue; }
+      ctx.globalAlpha=Math.max(0,p.life);
+      ctx.fillStyle=p.c;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r*p.life+.5,0,6.3); ctx.fill();
+      ctx.globalAlpha=1;
+    }
+    for(const g of rings){
+      g.r+=3.2; g.life-=.03;
+      if(g.life<=0){ rings.splice(rings.indexOf(g),1); continue; }
+      ctx.globalAlpha=Math.max(0,g.life)*.8;
+      ctx.strokeStyle="#e3c878"; ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(g.x,g.y,g.r,0,6.3); ctx.stroke();
+      ctx.globalAlpha=1;
+    }
+    raf=requestAnimationFrame(frame);
+  }
+  function pos(e){
+    const r=cv.getBoundingClientRect();
+    const p=e.touches?e.touches[0]:e;
+    return {x:p.clientX-r.left, y:p.clientY-r.top};
+  }
+  cv.addEventListener("pointerdown",e=>{
+    const {x,y}=pos(e);
+    let best=null,bd=1e9;
+    for(const b of beads){
+      const d=Math.hypot(b.x-x,b.y-y);
+      if(d<b.r+14&&d<bd){bd=d;best=b;}
+    }
+    if(best) burst(best);
+  });
+  function start(){ if(raf==null){ size(); if(!beads.length) for(let i=0;i<14;i++) spawnBead(true); frame(); } }
+  function stop(){ if(raf!=null){ cancelAnimationFrame(raf); raf=null; } }
+  size(); start();
+  window.addEventListener("resize",size);
+  new IntersectionObserver(en=>{
+    const v=en[0].isIntersecting && document.getElementById("view-machine").classList.contains("active");
+    v?start():stop();
+  },{threshold:.05}).observe(cv);
+})();
