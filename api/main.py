@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr, Field
 
@@ -68,12 +69,6 @@ class ContactIn(BaseModel):
     timestamp: str | None = None
 
 
-@app.get("/")
-def root():
-    return {"service": "poauce-theory-api", "status": "ok",
-            "docs": "/docs", "products": "/api/products"}
-
-
 @app.get("/api/health")
 def health():
     return {"status": "ok",
@@ -103,11 +98,21 @@ def contact(data: ContactIn):
 
 
 # Serve the static marketing site from the same container (single Railway
-# service: frontend + API, one domain, no extra cost). API routes above take
-# precedence; everything else falls through to the site.
-SITE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site")
-if os.path.isdir(SITE_DIR):
-    app.mount("/", StaticFiles(directory=SITE_DIR, html=True), name="site")
+# service: frontend + API, one domain, no extra cost). The site lives at the
+# repo root (index.html, css/, js/, images/). API routes above take precedence.
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+for _mount, _dir in (("/css", "css"), ("/js", "js"), ("/images", "images")):
+    _full = os.path.join(ROOT_DIR, _dir)
+    if os.path.isdir(_full):
+        app.mount(_mount, StaticFiles(directory=_full), name=_dir)
+
+
+@app.get("/", include_in_schema=False)
+def home():
+    index = os.path.join(ROOT_DIR, "index.html")
+    if os.path.isfile(index):
+        return FileResponse(index)
+    return {"service": "poauce-theory-api", "status": "ok"}
 
 
 if __name__ == "__main__":
