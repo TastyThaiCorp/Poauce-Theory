@@ -379,6 +379,8 @@ lucide.createIcons();
   }
   function burst(b){
     pops++; if(counter) counter.textContent=pops;
+    const w=document.getElementById("pop-word");
+    if(w) w.textContent = pops===1 ? "pop" : "pops";
     for(let i=0;i<16;i++){
       const a=rnd(0,6.3), sp=rnd(1,4.5);
       parts.push({x:b.x,y:b.y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp-1,
