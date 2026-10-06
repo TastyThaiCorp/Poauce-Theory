@@ -1,0 +1,61 @@
+/* Poauce Theory — animations (transform/opacity only, no layout shift) */
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes scrollHint{0%,100%{transform:translate(-50%,0);opacity:.7}50%{transform:translate(-50%,10px);opacity:.3}}
+@keyframes shimmer{from{background-position:-200% 0}to{background-position:200% 0}}
+
+.view.active{animation:fadeIn .45s ease both}
+.reveal{opacity:0;transform:translateY(26px)}
+.reveal.in{animation:fadeUp .8s cubic-bezier(.25,1,.5,1) both}
+
+.hero-inner h1 .gold{background:linear-gradient(110deg,#c9a227 30%,#f4e3ac 50%,#c9a227 70%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shimmer 6s linear infinite}
+.hero-scroll{animation:scrollHint 2.4s ease-in-out infinite}
+
+/* product cards stagger in */
+.product-card{opacity:0;transform:translateY(18px)}
+.product-card.in{animation:fadeUp .6s cubic-bezier(.25,1,.5,1) both}
+.product-card:nth-child(2).in{animation-delay:.06s}
+.product-card:nth-child(3).in{animation-delay:.12s}
+.product-card:nth-child(4).in{animation-delay:.18s}
+.product-card:nth-child(5).in{animation-delay:.24s}
+.product-card:nth-child(6).in{animation-delay:.3s}
+.product-card:nth-child(7).in{animation-delay:.36s}
+.product-card:nth-child(8).in{animation-delay:.42s}
+
+/* filtering: fade without layout jump */
+.product-card.filter-hide{opacity:0;transform:scale(.96);pointer-events:none;position:absolute;visibility:hidden}
+.product-grid{position:relative}
+.product-card.filter-show{animation:fadeUp .45s cubic-bezier(.25,1,.5,1) both}
+
+/* image hover zoom (inside overflow frame, no layout shift) */
+.product-card .img-wrap{overflow:hidden;aspect-ratio:1}
+.product-card .img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.25,1,.5,1)}
+.product-card:hover .img-wrap img{transform:scale(1.06)}
+
+/* buttons micro-interaction */
+.btn{position:relative;overflow:hidden}
+.btn::after{content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);transition:left .6s ease}
+.btn:hover::after{left:130%}
+
+/* drawer */
+.mobile-drawer{transition:right .5s cubic-bezier(.25,1,.5,1)}
+.mobile-nav a{opacity:0;transform:translateX(24px);transition:opacity .4s ease,transform .4s cubic-bezier(.25,1,.5,1)}
+.mobile-drawer.open .mobile-nav a{opacity:1;transform:translateX(0)}
+.mobile-drawer.open .mobile-nav a:nth-child(2){transition-delay:.07s}
+.mobile-drawer.open .mobile-nav a:nth-child(3){transition-delay:.14s}
+.mobile-drawer.open .mobile-nav a:nth-child(4){transition-delay:.21s}
+.mobile-drawer.open .mobile-nav a:nth-child(5){transition-delay:.28s}
+
+/* profile bars fill on detail open */
+.profile-fill{transition:width 1.1s cubic-bezier(.25,1,.5,1)}
+
+/* toast */
+.toast{transition:transform .5s cubic-bezier(.25,1,.5,1),opacity .5s ease}
+
+/* subtle float on dict card + hero beads */
+.dict-card{animation:floaty 7s ease-in-out infinite}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
