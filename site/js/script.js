@@ -1,8 +1,9 @@
 /* Poauce Theory — site engine */
 "use strict";
 
-/* Set this to your Railway service URL once the API deploys, e.g.
-   "https://poauce-theory-api.up.railway.app". Leave "" for offline demo mode. */
+/* Empty string = same-origin (Railway serves site + API together).
+   Set to "https://your-api.up.railway.app" only if the frontend is hosted
+   separately (e.g. GitHub Pages) from the API. */
 const RAILWAY_API_URL = "";
 
 const PRODUCTS = [
@@ -209,15 +210,14 @@ document.getElementById("contact-form").addEventListener("submit", async e => {
   const original = btn.textContent;
   btn.textContent = "Sending…";
   let delivered = false;
-  if(RAILWAY_API_URL){
-    try{
-      const res = await fetch(RAILWAY_API_URL.replace(/\/$/, "") + "/api/contact", {
+  const base = RAILWAY_API_URL ? RAILWAY_API_URL.replace(/\/$/, "") : "";
+  try{
+    const res = await fetch(base + "/api/contact", {
         method:"POST", headers:{"Content-Type":"application/json","Accept":"application/json"},
         body: JSON.stringify(payload),
       });
       delivered = res.ok;
     }catch(err){ console.warn("API unreachable, using local confirm:", err); }
-  }
   form.reset();
   btn.disabled = false;
   btn.textContent = original;

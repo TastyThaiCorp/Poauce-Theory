@@ -12,6 +12,7 @@ from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, EmailStr, Field
 
 app = FastAPI(title="Poauce Theory API", version="1.0.0")
@@ -99,6 +100,14 @@ def contact(data: ContactIn):
         }
     except Exception as exc:  # never leak internals
         raise HTTPException(status_code=500, detail="Intake failed.") from exc
+
+
+# Serve the static marketing site from the same container (single Railway
+# service: frontend + API, one domain, no extra cost). API routes above take
+# precedence; everything else falls through to the site.
+SITE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "site")
+if os.path.isdir(SITE_DIR):
+    app.mount("/", StaticFiles(directory=SITE_DIR, html=True), name="site")
 
 
 if __name__ == "__main__":
