@@ -149,6 +149,10 @@ function go(view, productId){
 navLinks.forEach(el => el.addEventListener("click", e => {
   e.preventDefault();
   go(el.dataset.view, el.dataset.product);
+  if(el.dataset.filter){
+    const btn = document.querySelector(`.filter-btn[data-filter="${el.dataset.filter}"]`);
+    if(btn) setTimeout(() => btn.click(), 60);
+  }
 }));
 
 /* ---------- mobile drawer ---------- */

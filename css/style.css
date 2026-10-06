@@ -278,3 +278,23 @@ body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opa
 .pillar-icon{width:58px;height:58px;object-fit:contain;margin-bottom:.9rem}
 .brand-logo{height:34px !important}
 .pop-lab-head{display:flex;align-items:center;gap:1rem}
+
+/* ---- rich mobile drawer ---- */
+.mobile-drawer{overflow-y:auto;scrollbar-width:thin}
+.drawer-logo{width:min(210px,60vw);height:auto;margin:0 0 .6rem;display:block}
+.drawer-tag{font-family:var(--serif);font-style:italic;color:var(--ivory);opacity:.85;margin:0 0 1.8rem;font-size:1.05rem}
+.mobile-nav{gap:1.1rem;margin-bottom:1.6rem}
+.mobile-nav a{display:flex;align-items:center;gap:.9rem;font-size:1.35rem}
+.mobile-nav a img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5))}
+.drawer-divider{display:flex;align-items:center;gap:.8rem;margin:0 0 1.4rem}
+.drawer-divider span{flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.5}
+.drawer-divider img{width:34px;height:34px;object-fit:contain}
+.drawer-label{font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:0 0 .8rem}
+.drawer-chips{display:flex;flex-wrap:wrap;gap:.55rem;margin-bottom:1.8rem}
+.drawer-chips button{background:rgba(212,169,78,.1);border:1px solid rgba(212,169,78,.4);color:var(--ivory);border-radius:999px;padding:.5rem 1rem;font-family:var(--serif);font-style:italic;font-size:.95rem;cursor:pointer;transition:.25s}
+.drawer-chips button:hover{background:rgba(212,169,78,.25);border-color:var(--gold)}
+.drawer-foot{border-top:1px solid rgba(212,169,78,.25);padding-top:1.4rem;display:flex;flex-direction:column;align-items:flex-start;gap:.7rem}
+.drawer-foot img{width:44px;height:44px;object-fit:contain}
+.drawer-foot p{font-family:var(--serif);font-style:italic;color:var(--ivory);opacity:.85;margin:0}
+.drawer-cta{display:inline-block;margin-top:.3rem;padding:.7rem 1.4rem;border:1px solid var(--gold);border-radius:999px;color:var(--gold) !important;font-family:var(--serif);font-style:italic;font-size:1rem !important;text-decoration:none;transition:.25s}
+.drawer-cta:hover{background:var(--gold);color:#141210 !important}
