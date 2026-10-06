@@ -269,3 +269,12 @@ body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opa
   .product-grid{grid-template-columns:1fr}
   .brand{font-size:.8rem;letter-spacing:.12em}
 }
+
+/* ---- gold brand icons ---- */
+.section-icon{width:64px;height:64px;object-fit:contain;margin-bottom:1.1rem;filter:drop-shadow(0 4px 14px rgba(0,0,0,.5))}
+.section-icon.sm{width:52px;height:52px;margin-bottom:0}
+.hero-logo{width:min(430px,72vw);height:auto;margin:0 auto 1.4rem;display:block;filter:drop-shadow(0 10px 34px rgba(0,0,0,.55))}
+.brand-logo-big{width:min(300px,60vw);height:auto;margin-bottom:1.2rem}
+.pillar-icon{width:58px;height:58px;object-fit:contain;margin-bottom:.9rem}
+.brand-logo{height:34px !important}
+.pop-lab-head{display:flex;align-items:center;gap:1rem}
