@@ -90,6 +90,9 @@ p{line-height:1.7;color:var(--muted);font-size:.95rem}
 .product-card{background:var(--wood-2);border:1px solid var(--wood-border);cursor:pointer;transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease);display:flex;flex-direction:column}
 .product-card:hover{transform:translateY(-6px);border-color:rgba(201,162,39,.5);box-shadow:0 24px 50px rgba(0,0,0,.5)}
 .product-card img{aspect-ratio:1;object-fit:cover;width:100%}
+.hero-banner{display:block;position:relative;overflow:hidden;border-radius:1.4rem;border:1px solid var(--wood-border);text-decoration:none}
+.hero-banner img{width:100%;display:block;aspect-ratio:21/9;object-fit:cover}
+.hero-banner-cap{position:absolute;left:1.4rem;bottom:1.1rem;font-size:.95rem;letter-spacing:.06em;color:var(--ivory);text-shadow:0 2px 12px rgba(0,0,0,.7)}
 .product-body{padding:1.4rem;display:flex;flex-direction:column;gap:.5rem;flex:1}
 .product-cat{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
 .product-body h3{font-size:1.35rem}
